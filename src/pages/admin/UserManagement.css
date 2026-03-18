@@ -1,0 +1,309 @@
+.user-management-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-color);
+}
+
+.user-management-container {
+  display: flex;
+  flex: 1;
+}
+
+.management-sidebar {
+  width: 250px;
+  background-color: var(--primary-color);
+  padding: 2rem 0;
+  position: sticky;
+  top: 70px;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+}
+
+.admin-logo {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 0 1.5rem;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+  font-size: 0.95rem;
+}
+
+.admin-nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.admin-nav-item.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-left-color: white;
+}
+
+.management-main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.management-header {
+  margin-bottom: 2rem;
+}
+
+.management-header h1 {
+  color: var(--primary-color);
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.management-header p {
+  color: var(--text-color);
+  opacity: 0.8;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.management-toolbar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.management-toolbar input {
+  flex: 1;
+  min-width: 250px;
+}
+
+.toolbar-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.users-table-container {
+  overflow-x: auto;
+  border-radius: 0.75rem;
+  border: 1px solid #e0e0e0;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.users-table thead {
+  background-color: var(--bg-color);
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.users-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.users-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.users-table tbody tr:hover {
+  background-color: var(--bg-color);
+}
+
+.name-cell {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.email-cell {
+  color: #666;
+}
+
+.date-cell {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.cycles-cell {
+  font-weight: 600;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  padding: 0.25rem;
+}
+
+.action-btn:hover {
+  transform: scale(1.2);
+}
+
+.action-btn.delete:hover {
+  color: #e74c3c;
+}
+
+.no-users {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-color);
+  opacity: 0.5;
+}
+
+.table-footer {
+  padding: 1rem;
+  background-color: white;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.table-footer p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.pagination {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.page-info {
+  color: var(--text-color);
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .user-management-container {
+    flex-direction: column;
+  }
+
+  .management-sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+  }
+
+  .admin-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .admin-nav-item {
+    flex: 1;
+    min-width: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .management-main {
+    padding: 1rem;
+  }
+
+  .management-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .management-toolbar {
+    flex-direction: column;
+  }
+
+  .management-toolbar input {
+    width: 100%;
+  }
+
+  .toolbar-buttons {
+    width: 100%;
+  }
+
+  .toolbar-buttons button {
+    flex: 1;
+  }
+
+  .users-table {
+    font-size: 0.85rem;
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .actions-cell {
+    gap: 0.25rem;
+  }
+
+  .action-btn {
+    font-size: 1rem;
+  }
+
+  .table-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pagination {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .pagination button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .users-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

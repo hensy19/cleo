@@ -1,0 +1,89 @@
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.input-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.required {
+  color: #e74c3c;
+  margin-left: 0.25rem;
+}
+
+.input-field {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: white;
+  color: var(--text-color);
+  font-family: inherit;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(16, 81, 127, 0.1);
+}
+
+.input-field:disabled {
+  background-color: #f0f0f0;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.input-field.error {
+  border-color: #e74c3c;
+}
+
+.input-field.error:focus {
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.input-error {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: -0.3rem;
+}
+
+/* Floating Label Style */
+.input-floating {
+  position: relative;
+}
+
+.input-floating .input-label {
+  position: absolute;
+  top: 0.75rem;
+  left: 1rem;
+  background-color: white;
+  padding: 0 0.25rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  color: #999;
+}
+
+.input-floating .input-field:focus ~ .input-label,
+.input-floating .input-field:not(:placeholder-shown) ~ .input-label {
+  top: -0.75rem;
+  left: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .input-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .input-field {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
