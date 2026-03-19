@@ -6,13 +6,8 @@ CLEO is a modern web-based period tracking and wellness application designed to 
 Features
 
 📅 Cycle Tracking – Log and monitor menstrual cycle dates
-
 🤕 Symptom Tracking – Track symptoms like cramps, mood swings, fatigue, etc.
-
 📊 History & Insights – View past records and identify patterns
-
 🎨 User-Friendly UI – Clean and responsive design for better usability
-
 🔐 Data Management – Secure handling of user data
-
 ⚡ Real-Time Updates – Instant updates for user inputs
