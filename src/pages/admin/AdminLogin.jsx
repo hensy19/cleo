@@ -91,11 +91,7 @@ export default function AdminLogin() {
             </Button>
           </form>
 
-          <div className="admin-demo-info">
-            <p>Demo Credentials:</p>
-            <p>Email: admin@cleo.app</p>
-            <p>Password: admin123</p>
-          </div>
+
         </div>
       </div>
 

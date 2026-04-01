@@ -1,0 +1,215 @@
+/* AdminProfile.css — matches the profile page mockup exactly */
+
+.ap-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 1.5rem 0;
+}
+
+/* ─── Banner Card ─── */
+.ap-banner-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.ap-avatar-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #DCECF5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ap-banner-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.2rem;
+}
+
+.ap-banner-role {
+  font-size: 0.9rem;
+  color: #6B7280;
+  font-weight: 400;
+}
+
+/* ─── Information Card ─── */
+.ap-info-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1.75rem;
+  position: relative;
+}
+
+.ap-info-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.75rem;
+}
+
+.ap-info-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.ap-edit-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6B7280;
+  padding: 0.2rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.ap-edit-btn:hover {
+  color: #374151;
+}
+
+/* ─── Form Grid ─── */
+.ap-grid-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.ap-grid-row-2 {
+  grid-template-columns: repeat(2, minmax(0, 200px));
+}
+
+.ap-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ap-field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #3B82F6;
+  letter-spacing: 0.01em;
+}
+
+.ap-input-readonly,
+.ap-input-active {
+  padding: 0.55rem 0.85rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #374151;
+  background: #FFFFFF;
+  outline: none;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ap-input-readonly {
+  cursor: default;
+  background: #FFFFFF;
+  color: #374151;
+}
+
+.ap-input-active:focus {
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+/* ─── Edit Mode Actions ─── */
+.ap-edit-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.ap-btn-cancel {
+  padding: 0.45rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: #FFFFFF;
+  border: 1px solid #D1D5DB;
+  color: #4B5563;
+  font-family: inherit;
+}
+
+.ap-btn-cancel:hover {
+  background: #F9FAFB;
+}
+
+.ap-btn-save {
+  padding: 0.45rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #3B82F6;
+  border: none;
+  color: #FFFFFF;
+  font-family: inherit;
+}
+
+.ap-btn-save:hover {
+  background: #2563EB;
+}
+
+/* ─── Save Toast ─── */
+.ap-toast {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #D1FAE5;
+  color: #065F46;
+  padding: 0.45rem 1.25rem;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  animation: toastIn 0.25s ease-out;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ─── Logout Button ─── */
+.ap-logout-btn {
+  display: inline-block;
+  background: #FF4D6A;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 20px;
+  padding: 0.55rem 1.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+
+.ap-logout-btn:hover {
+  background: #E53E5E;
+}
