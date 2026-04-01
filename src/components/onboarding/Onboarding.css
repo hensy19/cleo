@@ -9,17 +9,21 @@
   padding: 2rem;
   overflow: hidden;
 }
+
 .onboarding-container::before {
   content: "";
   position: absolute;
   inset: 0;
   backdrop-filter: blur(3px);
-  background: rgba(169, 215, 244, 0.479); /* thoda light effect */
+  background: rgba(169, 215, 244, 0.479);
+  /* thoda light effect */
   z-index: 0;
 }
+
 .onboarding-card {
   position: relative;
-  background-color: rgba(255, 255, 255, 0.85);;
+  background-color: rgba(255, 255, 255, 0.85);
+  ;
   backdrop-filter: blur(4px);
   border-radius: 1.5rem;
   padding: 3rem;
@@ -80,7 +84,7 @@
   font-weight: 700;
 }
 
-.onboarding-step > p {
+.onboarding-step>p {
   color: var(--text-color);
   text-align: center;
   opacity: 0.8;
@@ -242,7 +246,7 @@
     font-size: 1.25rem;
   }
 
-  .onboarding-step > p {
+  .onboarding-step>p {
     font-size: 0.9rem;
   }
 
