@@ -1,356 +1,128 @@
-.calendar-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
-/* ===== Header Section ===== */
-.calendar-header-section {
-  margin-bottom: 2.5rem;
-}
-
-.header-content {
-  background: linear-gradient(135deg, #EBF4FF 0%, #F0E6FF 100%);
+.calendar-page-mock {
+  width: 100%;
   padding: 2rem;
-  border-radius: 1rem;
-  border: 1px solid #D9E8FF;
+  background-color: #FFFFFF;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: calc(100vh - 70px);
 }
 
-.calendar-header-section h1 {
-  color: var(--text-color);
-  font-size: 2rem;
-  margin: 0 0 0.5rem 0;
-  font-weight: 700;
-}
-
-.header-subtitle {
-  color: var(--text-color);
-  opacity: 0.7;
-  margin: 0;
-  font-size: 1rem;
-}
-
-/* ===== Controls Section ===== */
-.calendar-controls-wrapper {
+.calendar-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 2rem;
-  display: flex;
-  justify-content: center;
 }
 
-.calendar-controls {
+.calendar-title-group {
   display: flex;
-  gap: 0.75rem;
-  background-color: white;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  border: 1px solid #E0E0E0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  gap: 1rem;
+  align-items: flex-start;
 }
 
-.control-btn {
-  padding: 0.75rem 1.25rem;
-  background-color: #F5F5F5;
-  border: 1.5px solid #E0E0E0;
-  border-radius: 0.5rem;
-  color: var(--text-color);
-  font-weight: 600;
-  font-size: 1rem;
+.back-arrow {
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #0A4269;
   cursor: pointer;
-  transition: all 0.3s ease;
-  min-width: 50px;
+  padding-top: 0.1rem;
 }
 
-.control-btn:hover {
-  background-color: #4A90E2;
-  color: white;
-  border-color: #4A90E2;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+.calendar-title {
+  margin: 0 0 0.25rem 0;
+  color: #0A4269;
+  font-size: 1.4rem;
+  font-weight: 600;
 }
 
-.prev-btn:hover,
-.next-btn:hover {
-  background-color: #4A90E2;
+.calendar-subtitle {
+  margin: 0;
+  color: #5B7A95;
+  font-size: 0.85rem;
 }
 
-.today-btn {
-  background-color: #EBF4FF;
-  border-color: #4A90E2;
-  color: #4A90E2;
-  font-weight: 700;
+.calendar-actions {
+  display: flex;
+  gap: 1rem;
 }
 
-.today-btn:hover {
-  background-color: #4A90E2;
-  color: white;
+.btn-log-period, .btn-view-history {
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-/* ===== Calendar Grid Wrapper ===== */
-.calendar-grid-wrapper {
-  margin-bottom: 3rem;
+.btn-log-period {
+  background-color: #9abfd9;
+  color: #FFFFFF;
 }
 
-/* ===== Cycle Guide Section ===== */
-.cycle-guide-section {
-  margin-bottom: 3rem;
+.btn-view-history {
+  background-color: #A9CAE2;
+  color: #FFFFFF;
 }
 
-.guide-title {
-  color: var(--text-color);
-  font-size: 1.5rem;
-  margin: 0 0 1.5rem 0;
-  font-weight: 700;
-}
-
-.guide-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
-}
-
-.guide-card {
-  background-color: white;
-  border: 1px solid #E0E0E0;
-  border-radius: 1rem;
-  padding: 2rem;
-  text-align: center;
-  transition: all 0.3s ease;
+.calendar-main-content {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+}
+
+/* Legend Card */
+.calendar-legend-card {
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  background-color: #FFFFFF;
+}
+
+.legend-title {
+  margin: 0 0 0.8rem 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.legend-items-wrapper {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
-.guide-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  border-color: transparent;
+.legend-item-block {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #333;
+  font-weight: 500;
 }
 
-.guide-icon {
-  font-size: 2.5rem;
-  display: block;
+.box {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
 }
 
-.guide-card h3 {
-  color: var(--text-color);
-  font-size: 1.1rem;
-  margin: 0;
-  font-weight: 700;
+.period-box {
+  background-color: #F8D7DA;
+  border: 1px solid #F5C2C7;
 }
 
-.guide-card p {
-  color: var(--text-color);
-  opacity: 0.7;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  margin: 0;
+.ovulation-box {
+  background-color: #E2D3F5;
 }
 
-.phase-badge {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.fertile-box {
+  background-color: #FFB3D9;
 }
 
-/* Card Specific Styling */
-.period-card {
-  border-left: 4px solid #E74C3C;
-}
-
-.period-card .phase-badge {
-  background-color: #FFE5E5;
-  color: #E74C3C;
-}
-
-.follicular-card {
-  border-left: 4px solid #3498DB;
-}
-
-.follicular-card .phase-badge {
-  background-color: #DCF0FF;
-  color: #3498DB;
-}
-
-.ovulation-card {
-  border-left: 4px solid #F39C12;
-}
-
-.ovulation-card .phase-badge {
-  background-color: #FFF3E0;
-  color: #F39C12;
-}
-
-.luteal-card {
-  border-left: 4px solid #9B59B6;
-}
-
-.luteal-card .phase-badge {
-  background-color: #F3E5F5;
-  color: #9B59B6;
-}
-
-/* ===== Quick Stats ===== */
-.quick-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.stat-card {
-  background-color: white;
-  border: 1px solid #E0E0E0;
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.stat-card:hover {
-  border-color: #4A90E2;
-  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.15);
-}
-
-.stat-label {
-  color: var(--text-color);
-  opacity: 0.7;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.stat-value {
-  color: #4A90E2;
-  font-size: 1.8rem;
-  font-weight: 700;
-}
-
-/* ===== Day Details Modal ===== */
-.day-details {
-  padding: 1rem 0;
-}
-
-.detail-section {
-  margin-bottom: 1.5rem;
-  padding: 1.25rem;
-  background-color: #F8F9FA;
-  border-radius: 0.75rem;
-  border-left: 4px solid #4A90E2;
-}
-
-.period-section {
-  border-left-color: #E74C3C;
-}
-
-.symptom-section {
-  border-left-color: #3498DB;
-}
-
-.mood-section {
-  border-left-color: #F39C12;
-}
-
-.detail-section h4 {
-  color: var(--text-color);
-  margin: 0 0 1rem 0;
-  font-size: 1.05rem;
-  font-weight: 700;
-}
-
-.detail-section p {
-  margin: 0.5rem 0;
-  color: var(--text-color);
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-.detail-section strong {
-  color: var(--text-color);
-  font-weight: 600;
-}
-
-.no-data {
-  text-align: center;
-  color: var(--text-color);
-  opacity: 0.6;
-  padding: 2rem;
-  font-size: 0.95rem;
-  background-color: #F8F9FA;
-  border-radius: 0.75rem;
-}
-
-/* ===== Responsive Design ===== */
-@media (max-width: 1024px) {
-  .guide-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .calendar-page {
-    padding: 1rem;
-  }
-
-  .header-content {
-    padding: 1.5rem;
-  }
-
-  .calendar-header-section h1 {
-    font-size: 1.5rem;
-  }
-
-  .header-subtitle {
-    font-size: 0.9rem;
-  }
-
-  .calendar-controls {
-    gap: 0.5rem;
-    padding: 0.75rem;
-  }
-
-  .control-btn {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-    min-width: 45px;
-  }
-
-  .guide-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .guide-card {
-    padding: 1.5rem;
-  }
-
-  .guide-icon {
-    font-size: 2rem;
-  }
-
-  .guide-card h3 {
-    font-size: 1rem;
-  }
-
-  .quick-stats {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-  }
-
-  .stat-card {
-    padding: 1.25rem;
-  }
-
-  .stat-label {
-    font-size: 0.8rem;
-  }
-
-  .stat-value {
-    font-size: 1.5rem;
-  }
+.today-box {
+  background-color: transparent;
+  border: 2px solid #5B7A95;
 }

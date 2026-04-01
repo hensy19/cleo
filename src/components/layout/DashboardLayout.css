@@ -6,13 +6,7 @@
 
 .main-content {
   flex: 1;
-  padding: 2rem;
-  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
-}
-
-@media (max-width: 768px) {
-  .main-content {
-    padding: 1rem;
-  }
 }

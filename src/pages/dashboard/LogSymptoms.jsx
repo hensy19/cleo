@@ -1,128 +1,164 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { 
+  ChevronLeft, 
+  Thermometer, 
+  Wind, 
+  Brain, 
+  Zap, 
+  Heart, 
+  Smile, 
+  Activity, 
+  Utensils 
+} from 'lucide-react'
 import DashboardLayout from '../../components/layout/DashboardLayout'
-import Card from '../../components/common/Card'
-import SymptomSelector from '../../components/symptoms/SymptomSelector'
-import Button from '../../components/common/Button'
 import './LogSymptoms.css'
 
 export default function LogSymptoms() {
-  const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().split('T')[0]
-  )
+  const navigate = useNavigate()
   const [selectedSymptoms, setSelectedSymptoms] = useState([])
   const [notes, setNotes] = useState('')
+  const [suggestedTip, setSuggestedTip] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
-  const navigate = useNavigate()
 
-  const [successMessage, setSuccessMessage] = useState('')
+  const symptoms = [
+    { id: 'cramps', icon: <Thermometer size={24} />, label: 'Cramps' },
+    { id: 'bloating', icon: <Wind size={24} />, label: 'Bloating' },
+    { id: 'headache', icon: <Brain size={24} />, label: 'Headache' },
+    { id: 'fatigue', icon: <Zap size={24} />, label: 'Fatigue' },
+    { id: 'anxiety', icon: <Heart size={24} />, label: 'Anxiety' },
+    { id: 'mood', icon: <Smile size={24} />, label: 'Mood Swings' },
+    { id: 'energy', icon: <Activity size={24} />, label: 'High Energy' },
+    { id: 'appetite', icon: <Utensils size={24} />, label: 'Increased Appetite' }
+  ]
 
-  const handleSubmit = async (e) => {
+  const toggleSymptom = (id) => {
+    setSelectedSymptoms(prev => 
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    )
+  }
+
+  const handleSubmit = (e) => {
     e.preventDefault()
-    if (selectedSymptoms.length === 0) {
-      alert('Please select at least one symptom')
-      return
-    }
+    if (selectedSymptoms.length === 0) return
 
     setIsLoading(true)
     setTimeout(() => {
-      const symptomLogs = JSON.parse(localStorage.getItem('symptomLogs') || '[]')
-      symptomLogs.push({
+      const logs = JSON.parse(localStorage.getItem('symptomLogs') || '[]')
+      const newEntry = {
         id: Date.now(),
-        date: selectedDate,
+        date: new Date().toISOString().split('T')[0],
         symptoms: selectedSymptoms,
         notes,
         createdAt: new Date().toISOString()
-      })
-      localStorage.setItem('symptomLogs', JSON.stringify(symptomLogs))
-
-      setIsLoading(false)
-      setSuccessMessage('Symptoms logged successfully!')
-      // Reset form
-      setSelectedSymptoms([])
-      setNotes('')
-      setSelectedDate(new Date().toISOString().split('T')[0])
+      }
+      localStorage.setItem('symptomLogs', JSON.stringify([...logs, newEntry]))
       
-      // Clear success message after 3 seconds
-      setTimeout(() => setSuccessMessage(''), 3000)
+      // Analysis for relevant tip
+      const tipsMapping = {
+        'cramps': { title: 'Heat Therapy', content: 'Apply a heating pad to your lower abdomen for 15-20 minutes to relieve menstrual cramps.', color: 'pink' },
+        'bloating': { title: 'Reduce Bloating', content: 'Avoid salty foods and drink plenty of water. Potassium-rich foods like bananas can help.', color: 'green' },
+        'fatigue': { title: 'Iron-Rich Foods', content: 'Include spinach, lentils, and red meat in your diet to replenish iron lost during menstruation.', color: 'green' },
+        'headache': { title: 'Stay Hydrated', content: 'Drinking plenty of water and getting rest can help alleviate menstrual headaches.', color: 'lightblue' }
+      }
+      
+      // Pick first matched symptom or default
+      const matchedSymptom = selectedSymptoms.find(s => tipsMapping[s])
+      setSuggestedTip(tipsMapping[matchedSymptom] || { 
+        title: 'Managing PMS Symptoms', 
+        content: 'Stay hydrated, reduce caffeine, and get adequate sleep to minimize menstruation-related symptoms.',
+        color: 'pink'
+      })
+      
+      setIsLoading(false)
     }, 1000)
   }
 
   return (
     <DashboardLayout>
-      <div className="log-symptoms-container">
-        <div className="log-symptoms-header">
-          <h1>🔔 Log Your Symptoms</h1>
-          <p>Track how you're feeling today</p>
+      <div className="symptom-logger-page">
+        
+        <div className="symptom-logger-header">
+          <button className="back-arrow-btn" onClick={() => navigate('/dashboard')}>
+            <ChevronLeft size={32} />
+            <span>Symptom Logger</span>
+          </button>
+          <p className="symptom-logger-subtitle">Track your physical and emotional symptoms</p>
         </div>
 
-        {successMessage && (
-          <div className="success-message" style={{ 
-            backgroundColor: '#d4edda', 
-            color: '#155724', 
-            padding: '10px', 
-            borderRadius: '5px', 
-            marginBottom: '20px',
-            textAlign: 'center'
-          }}>
-            {successMessage}
+        {!suggestedTip ? (
+          <div className="symptom-cards-container">
+            {/* Main Selection Card */}
+            <div className="symptom-card selection-card">
+              <h3>Select Your Symptoms</h3>
+              
+              <div className="symptoms-grid-modern">
+                {symptoms.map(symptom => (
+                  <button
+                    key={symptom.id}
+                    className={`symptom-item-btn ${selectedSymptoms.includes(symptom.id) ? 'active' : ''}`}
+                    onClick={() => toggleSymptom(symptom.id)}
+                  >
+                    <div className="symptom-icon-box">{symptom.icon}</div>
+                    <span className="symptom-label-text">{symptom.label}</span>
+                  </button>
+                ))}
+              </div>
+
+              <div className="symptom-card-footer">
+                <button 
+                  className="save-symptoms-pill-btn" 
+                  onClick={handleSubmit}
+                  disabled={selectedSymptoms.length === 0 || isLoading}
+                >
+                  {isLoading ? 'Saving...' : 'Save Symptoms'}
+                </button>
+              </div>
+            </div>
+
+            {/* Additional Notes Card */}
+            <div className="symptom-card notes-card">
+              <h3>Additional Notes</h3>
+              <textarea
+                placeholder="Add Additional symptoms about how you are feeling today..."
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                className="symptoms-textarea-modern"
+                rows="3"
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="symptom-suggestion-overlay">
+            <div className="suggestion-animation-wrapper">
+              <div className="success-lottie-placeholder">✓</div>
+              <h2>Symptoms Recorded!</h2>
+              <p>Based on your log, we recommend this care tip:</p>
+              
+              <div className="modern-tip-card suggested-care-card">
+                <div className={`tip-card-header ${suggestedTip.color}`}>
+                  <div className="tip-icon-bubble">
+                    <span role="img" aria-label="lightbulb">💡</span>
+                  </div>
+                </div>
+                <div className="tip-card-content">
+                  <h3>{suggestedTip.title}</h3>
+                  <p>{suggestedTip.content}</p>
+                </div>
+              </div>
+
+              <div className="suggestion-footer-actions">
+                <button className="finish-symptoms-btn" onClick={() => navigate('/dashboard')}>
+                  Finish & Return to Dashboard
+                </button>
+                <button className="edit-log-btn" onClick={() => setSuggestedTip(null)}>
+                  Edit Log
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
-        <Card>
-          <form onSubmit={handleSubmit} className="symptoms-form">
-            <div className="form-group">
-              <label htmlFor="date" className="form-label">Date</label>
-              <input
-                id="date"
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className="date-input"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Select Symptoms</label>
-              <SymptomSelector
-                selected={selectedSymptoms}
-                onChange={setSelectedSymptoms}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="notes" className="form-label">Notes (Optional)</label>
-              <textarea
-                id="notes"
-                placeholder="Add any additional notes about your symptoms..."
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                className="notes-textarea"
-                rows="4"
-              />
-            </div>
-
-            <div className="form-actions">
-              <Button
-                variant="primary"
-                size="large"
-                type="submit"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Saving...' : 'Save Symptoms'}
-              </Button>
-              <Button
-                variant="outline"
-                size="large"
-                onClick={() => navigate('/dashboard')}
-                type="button"
-              >
-                Cancel
-              </Button>
-            </div>
-          </form>
-        </Card>
       </div>
     </DashboardLayout>
   )

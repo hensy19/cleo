@@ -1,148 +1,136 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ChevronLeft } from 'lucide-react'
 import DashboardLayout from '../../components/layout/DashboardLayout'
-import Card from '../../components/common/Card'
-import Input from '../../components/common/Input'
-import Button from '../../components/common/Button'
 import './LogPeriod.css'
 
 export default function LogPeriod() {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
-  const [errors, setErrors] = useState({})
+  const [flow, setFlow] = useState('medium')
   const [isLoading, setIsLoading] = useState(false)
-  const [successMessage, setSuccessMessage] = useState('')
   const navigate = useNavigate()
 
-  const validateForm = () => {
-    const newErrors = {}
-    if (!startDate) newErrors.startDate = 'Start date is required'
-    if (!endDate) newErrors.endDate = 'End date is required'
-    if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
-      newErrors.endDate = 'End date must be after start date'
-    }
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    if (!validateForm()) return
+    if (!startDate || !endDate) return
 
     setIsLoading(true)
-    // Simulate API call
     setTimeout(() => {
-      // Save to local storage
       const periodLogs = JSON.parse(localStorage.getItem('periodLogs') || '[]')
-      const newPeriod = {
+      periodLogs.push({
         id: Date.now(),
         startDate,
         endDate,
+        flow,
         createdAt: new Date().toISOString()
-      }
-      periodLogs.push(newPeriod)
+      })
       localStorage.setItem('periodLogs', JSON.stringify(periodLogs))
-
-      // Save as current/last period for use in other parts of the app
-      localStorage.setItem('currentPeriod', JSON.stringify(newPeriod))
-
       setIsLoading(false)
-      setSuccessMessage('Period logged successfully!')
-      
-      // Reset form
-      setStartDate('')
-      setEndDate('')
-      setErrors({})
-      
-      // Clear success message after 3 seconds
-      setTimeout(() => setSuccessMessage(''), 3000)
-    }, 1000)
+      navigate('/dashboard')
+    }, 800)
   }
 
   return (
-    <DashboardLayout>
-      <div className="log-period-container">
+    <DashboardLayout showFooter={false}>
+      <div className="log-period-page">
+        
         <div className="log-period-header">
-          <h1>📝 Log Your Period</h1>
-          <p>Enter the dates of your current period</p>
+          <button className="back-arrow-btn" onClick={() => navigate('/dashboard')}>
+            <ChevronLeft size={32} />
+            <span>Log Period</span>
+          </button>
+          <p className="log-period-subtitle">Record your period dates and flow</p>
         </div>
 
-        {successMessage && (
-          <div className="success-message" style={{ 
-            backgroundColor: '#d4edda', 
-            color: '#155724', 
-            padding: '10px', 
-            borderRadius: '5px', 
-            marginBottom: '20px',
-            textAlign: 'center'
-          }}>
-            {successMessage}
-          </div>
-        )}
-
-        <Card>
-          <form onSubmit={handleSubmit} className="log-form">
-            <Input
-              label="Period Start Date"
-              type="date"
-              name="startDate"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              error={errors.startDate}
-              required
-            />
-
-            <Input
-              label="Period End Date"
-              type="date"
-              name="endDate"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              error={errors.endDate}
-              required
-            />
-
-            {startDate && endDate && (
-              <div className="period-summary">
-                <p>
-                  Period duration: <strong>
-                    {Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24) + 1)} days
-                  </strong>
-                </p>
+        <div className="log-period-container">
+          <div className="log-period-card">
+            <form onSubmit={handleSubmit} className="log-period-form">
+              
+              <div className="form-section">
+                <label>Start Date</label>
+                <div className="input-field">
+                  <input
+                    type="date"
+                    value={startDate}
+                    onChange={e => setStartDate(e.target.value)}
+                    required
+                  />
+                </div>
               </div>
-            )}
 
-            <div className="form-actions">
-              <Button
-                variant="primary"
-                size="large"
-                type="submit"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Saving...' : 'Save Period'}
-              </Button>
-              <Button
-                variant="outline"
-                size="large"
-                onClick={() => navigate('/dashboard')}
-                type="button"
-              >
-                Cancel
-              </Button>
-            </div>
-          </form>
-        </Card>
+              <div className="form-section">
+                <label>End Date</label>
+                <div className="input-field">
+                  <input
+                    type="date"
+                    value={endDate}
+                    onChange={e => setEndDate(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
 
-        {/* Tips Section */}
-        <Card className="tips-section">
-          <h3>💡 Tips for Accurate Tracking</h3>
-          <ul className="tips-list">
-            <li>Log your period as soon as it starts</li>
-            <li>Be consistent with your tracking for better predictions</li>
-            <li>You can update or delete past entries anytime</li>
-            <li>The more accurate your logs, the better our predictions</li>
-          </ul>
-        </Card>
+              <div className="form-section">
+                <label className="flow-label">Flow</label>
+                <div className="flow-radio-group">
+                  <label className="flow-radio-item">
+                    <input 
+                      type="radio" 
+                      name="flow" 
+                      value="light" 
+                      checked={flow === 'light'} 
+                      onChange={() => setFlow('light')} 
+                    />
+                    <div className="radio-circle"></div>
+                    <span>Light flow</span>
+                  </label>
+                  <label className="flow-radio-item">
+                    <input 
+                      type="radio" 
+                      name="flow" 
+                      value="medium" 
+                      checked={flow === 'medium'} 
+                      onChange={() => setFlow('medium')} 
+                    />
+                    <div className="radio-circle"></div>
+                    <span>Medium flow</span>
+                  </label>
+                  <label className="flow-radio-item">
+                    <input 
+                      type="radio" 
+                      name="flow" 
+                      value="heavy" 
+                      checked={flow === 'heavy'} 
+                      onChange={() => setFlow('heavy')} 
+                    />
+                    <div className="radio-circle"></div>
+                    <span>Heavy flow</span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="log-period-actions">
+                <button 
+                  type="button" 
+                  className="lp-back-btn" 
+                  onClick={() => navigate('/dashboard')}
+                >
+                  Back
+                </button>
+                <button 
+                  type="submit" 
+                  className="lp-continue-btn" 
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Saving...' : 'Continue'}
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
       </div>
     </DashboardLayout>
   )

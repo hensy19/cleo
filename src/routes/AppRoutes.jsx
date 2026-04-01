@@ -18,18 +18,19 @@ import Tips from '../pages/dashboard/Tips'
 import Profile from '../pages/dashboard/Profile'
 import Mood from '../pages/dashboard/Mood'
 import Notes from '../pages/dashboard/Notes'
+import ChangePassword from '../pages/dashboard/ChangePassword'
 
 // Admin Pages
 import AdminLogin from '../pages/admin/AdminLogin'
 import AdminDashboard from '../pages/admin/AdminDashboard'
 import UserManagement from '../pages/admin/UserManagement'
-import ContentManagement from '../pages/admin/ContentManagement'
-import AdminRoles from '../pages/admin/AdminRoles'
-import AdminSettingsGeneral from '../pages/admin/AdminSettingsGeneral'
-import AdminSettingsPrivacy from '../pages/admin/AdminSettingsPrivacy'
-import AdminSettingsContent from '../pages/admin/AdminSettingsContent'
-import AdminSettingsData from '../pages/admin/AdminSettingsData'
+import AdminContent from '../pages/admin/AdminContent'
+import AdminSettings from '../pages/admin/AdminSettings'
 import AdminProfile from '../pages/admin/AdminProfile'
+
+// Route helpers
+import ProtectedRoute from './ProtectedRoute'
+import NotFound from '../pages/NotFound'
 
 export default function AppRoutes() {
   return (
@@ -42,28 +43,29 @@ export default function AppRoutes() {
       {/* Onboarding */}
       <Route path="/onboarding" element={<OnboardingPage />} />
 
-      {/* Dashboard Routes */}
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/log-period" element={<LogPeriod />} />
-      <Route path="/log-symptoms" element={<LogSymptoms />} />
-      <Route path="/calendar" element={<CalendarPage />} />
-      <Route path="/history" element={<History />} />
-      <Route path="/mood" element={<Mood />} />
-      <Route path="/notes" element={<Notes />} />
-      <Route path="/tips" element={<Tips />} />
-      <Route path="/profile" element={<Profile />} />
+      {/* Protected Dashboard Routes */}
+      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      <Route path="/log-period" element={<ProtectedRoute><LogPeriod /></ProtectedRoute>} />
+      <Route path="/log-symptoms" element={<ProtectedRoute><LogSymptoms /></ProtectedRoute>} />
+      <Route path="/calendar" element={<ProtectedRoute><CalendarPage /></ProtectedRoute>} />
+      <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
+      <Route path="/mood" element={<ProtectedRoute><Mood /></ProtectedRoute>} />
+      <Route path="/notes" element={<ProtectedRoute><Notes /></ProtectedRoute>} />
+      <Route path="/tips" element={<ProtectedRoute><Tips /></ProtectedRoute>} />
+      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      <Route path="/change-password" element={<ProtectedRoute><ChangePassword /></ProtectedRoute>} />
 
       {/* Admin Routes */}
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/users" element={<UserManagement />} />
-      <Route path="/admin/content" element={<ContentManagement />} />
-      <Route path="/admin/roles" element={<AdminRoles />} />
-      <Route path="/admin/settings/general" element={<AdminSettingsGeneral />} />
-      <Route path="/admin/settings/privacy" element={<AdminSettingsPrivacy />} />
-      <Route path="/admin/settings/content" element={<AdminSettingsContent />} />
-      <Route path="/admin/settings/data" element={<AdminSettingsData />} />
+      <Route path="/admin/content" element={<AdminContent />} />
+      <Route path="/admin/roles" element={<AdminContent />} />
+      <Route path="/admin/settings" element={<AdminSettings />} />
       <Route path="/admin/profile" element={<AdminProfile />} />
+
+      {/* Fallback Route */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }
