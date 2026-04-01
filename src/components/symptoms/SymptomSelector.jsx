@@ -21,6 +21,7 @@ export default function SymptomSelector({
       <div className="symptoms-grid">
         {SYMPTOMS.map(symptom => (
           <button
+            type="button"
             key={symptom.id}
             className={`symptom-button ${selected.includes(symptom.id) ? 'selected' : ''}`}
             onClick={() => {
@@ -46,6 +47,7 @@ export default function SymptomSelector({
                 <span key={selectedId} className="selected-tag">
                   {symptom.label}
                   <button
+                    type="button"
                     onClick={() => onChange(selected.filter(id => id !== selectedId))}
                     className="tag-remove"
                   >

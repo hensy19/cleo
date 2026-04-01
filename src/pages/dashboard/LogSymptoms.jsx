@@ -15,6 +15,8 @@ export default function LogSymptoms() {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
+  const [successMessage, setSuccessMessage] = useState('')
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (selectedSymptoms.length === 0) {
@@ -35,7 +37,14 @@ export default function LogSymptoms() {
       localStorage.setItem('symptomLogs', JSON.stringify(symptomLogs))
 
       setIsLoading(false)
-      navigate('/dashboard')
+      setSuccessMessage('Symptoms logged successfully!')
+      // Reset form
+      setSelectedSymptoms([])
+      setNotes('')
+      setSelectedDate(new Date().toISOString().split('T')[0])
+      
+      // Clear success message after 3 seconds
+      setTimeout(() => setSuccessMessage(''), 3000)
     }, 1000)
   }
 
@@ -46,6 +55,19 @@ export default function LogSymptoms() {
           <h1>🔔 Log Your Symptoms</h1>
           <p>Track how you're feeling today</p>
         </div>
+
+        {successMessage && (
+          <div className="success-message" style={{ 
+            backgroundColor: '#d4edda', 
+            color: '#155724', 
+            padding: '10px', 
+            borderRadius: '5px', 
+            marginBottom: '20px',
+            textAlign: 'center'
+          }}>
+            {successMessage}
+          </div>
+        )}
 
         <Card>
           <form onSubmit={handleSubmit} className="symptoms-form">

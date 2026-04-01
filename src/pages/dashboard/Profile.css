@@ -173,22 +173,40 @@
   box-shadow: 0 2px 8px rgba(231, 76, 60, 0.1);
 }
 
-.logout-card h3 {
+.logout-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.logout-section,
+.delete-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.logout-section h3,
+.delete-section h3 {
   color: #c0392b;
   font-size: 1.1rem;
   margin: 0 0 0.5rem 0;
   font-weight: 600;
 }
 
-.logout-card p {
+.logout-section p,
+.delete-section p {
   color: #a93226;
   font-size: 0.9rem;
   margin: 0 0 1rem 0;
   opacity: 0.8;
 }
 
-.logout-card .button-full {
-  width: 100%;
+/* Responsive */
+@media (max-width: 768px) {
+  .logout-actions {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 }
 
 /* Modal Styles */

@@ -1,20 +1,33 @@
 .onboarding-container {
+  position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(20, 55, 120, 0.15), rgba(201, 225, 242, 0.15)), url('../../assets/images/bg.jpg') center/cover;
+  background: url('../../assets/images/bg.jpg') center/cover;
   background-attachment: fixed;
   padding: 2rem;
+  overflow: hidden;
 }
-
+.onboarding-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(3px);
+  background: rgba(169, 215, 244, 0.479); /* thoda light effect */
+  z-index: 0;
+}
 .onboarding-card {
-  background-color: white;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.85);;
+  backdrop-filter: blur(4px);
   border-radius: 1.5rem;
   padding: 3rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 500px;
+  z-index: 1;
+
 }
 
 /* Progress Indicator */

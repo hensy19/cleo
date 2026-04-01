@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import Navbar from '../../components/layout/Navbar'
 import Footer from '../../components/layout/Footer'
 import Button from '../../components/common/Button'
@@ -6,6 +7,14 @@ import femaleImage from '../../assets/images/female.png'
 import './Home.css'
 
 export default function Home() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
+    if (authToken) {
+      navigate('/dashboard')
+    }
+  }, [navigate])
   const features = [
     {
       id: 1,
@@ -84,6 +93,11 @@ export default function Home() {
                 <Button variant="primary" size="large">Start Tracking</Button>
               </Link>
               <button className="btn-secondary">Learn More</button>
+            </div>
+            <div className="admin-button-container">
+              <Link to="/admin/login">
+                <Button variant="outline" size="medium">Become Admin</Button>
+              </Link>
             </div>
           </div>
           <div className="hero-visual">

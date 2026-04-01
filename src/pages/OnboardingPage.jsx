@@ -23,11 +23,9 @@ export default function OnboardingPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <Navbar />
       <div style={{ flex: 1 }}>
         <Onboarding />
       </div>
-      <Footer />
     </div>
   )
 }

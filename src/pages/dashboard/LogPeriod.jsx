@@ -11,6 +11,7 @@ export default function LogPeriod() {
   const [endDate, setEndDate] = useState('')
   const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
   const navigate = useNavigate()
 
   const validateForm = () => {
@@ -33,16 +34,28 @@ export default function LogPeriod() {
     setTimeout(() => {
       // Save to local storage
       const periodLogs = JSON.parse(localStorage.getItem('periodLogs') || '[]')
-      periodLogs.push({
+      const newPeriod = {
         id: Date.now(),
         startDate,
         endDate,
         createdAt: new Date().toISOString()
-      })
+      }
+      periodLogs.push(newPeriod)
       localStorage.setItem('periodLogs', JSON.stringify(periodLogs))
 
+      // Save as current/last period for use in other parts of the app
+      localStorage.setItem('currentPeriod', JSON.stringify(newPeriod))
+
       setIsLoading(false)
-      navigate('/dashboard')
+      setSuccessMessage('Period logged successfully!')
+      
+      // Reset form
+      setStartDate('')
+      setEndDate('')
+      setErrors({})
+      
+      // Clear success message after 3 seconds
+      setTimeout(() => setSuccessMessage(''), 3000)
     }, 1000)
   }
 
@@ -53,6 +66,19 @@ export default function LogPeriod() {
           <h1>📝 Log Your Period</h1>
           <p>Enter the dates of your current period</p>
         </div>
+
+        {successMessage && (
+          <div className="success-message" style={{ 
+            backgroundColor: '#d4edda', 
+            color: '#155724', 
+            padding: '10px', 
+            borderRadius: '5px', 
+            marginBottom: '20px',
+            textAlign: 'center'
+          }}>
+            {successMessage}
+          </div>
+        )}
 
         <Card>
           <form onSubmit={handleSubmit} className="log-form">

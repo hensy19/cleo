@@ -13,12 +13,6 @@ export default function Profile() {
   const [formData, setFormData] = useState({})
   const [activeModal, setActiveModal] = useState(null)
   const [passwordData, setPasswordData] = useState({ current: '', new: '', confirm: '' })
-  const [notificationSettings, setNotificationSettings] = useState({
-    periodReminder: true,
-    ovulationReminder: true,
-    weeklyReport: true,
-    emailNotifications: true
-  })
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -29,7 +23,6 @@ export default function Profile() {
     }
 
     const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')
-    const savedNotifications = JSON.parse(localStorage.getItem('notificationSettings') || '{}')
     
     setUser(userInfo)
     setFormData({
@@ -40,10 +33,6 @@ export default function Profile() {
       periodLength: userInfo.periodLength || 5,
       lastPeriodDate: userInfo.lastPeriodDate || ''
     })
-    
-    if (Object.keys(savedNotifications).length > 0) {
-      setNotificationSettings(savedNotifications)
-    }
   }, [navigate])
 
   const handleChange = (e) => {
@@ -78,10 +67,22 @@ export default function Profile() {
     setActiveModal(null)
   }
 
-  const handleNotificationSave = () => {
-    localStorage.setItem('notificationSettings', JSON.stringify(notificationSettings))
-    alert('Notification settings updated!')
-    setActiveModal(null)
+  const handleDeleteProfile = () => {
+    if (confirm('Are you sure you want to delete your profile? This action cannot be undone and will permanently remove all your data.')) {
+      // Clear all user data
+      localStorage.removeItem('authToken')
+      localStorage.removeItem('userInfo')
+      localStorage.removeItem('onboardingCompleted')
+      localStorage.removeItem('periodLogs')
+      localStorage.removeItem('symptomLogs')
+      localStorage.removeItem('moodEntries')
+      localStorage.removeItem('userNotes')
+      localStorage.removeItem('currentPeriod')
+      localStorage.removeItem('notificationSettings')
+      
+      alert('Profile deleted successfully.')
+      navigate('/')
+    }
   }
 
   const handleLogout = () => {
@@ -250,19 +251,7 @@ export default function Profile() {
           </Card>
 
           <Card className="setting-card">
-            <h3>📢 Notifications</h3>
-            <p>Manage reminder notifications for your cycle</p>
-            <Button 
-              variant="outline"
-              onClick={() => setActiveModal('notifications')}
-              className="button-full"
-            >
-              Notification Settings
-            </Button>
-          </Card>
-
-          <Card className="setting-card">
-            <h3>📊 Data & Privacy</h3>
+            <h3> Data & Privacy</h3>
             <p>Download or delete your personal data</p>
             <Button 
               variant="outline"
@@ -288,16 +277,29 @@ export default function Profile() {
 
         {/* Logout Section */}
         <Card className="logout-card">
-          <h3>Sign Out</h3>
-          <p>You will be logged out from your CLEO account</p>
-          <Button
-            variant="danger"
-            onClick={handleLogout}
-            size="large"
-            className="button-full"
-          >
-            Logout
-          </Button>
+          <div className="logout-actions">
+            <div className="logout-section">
+              <h3>Sign Out</h3>
+              <p>You will be logged out from your CLEO account</p>
+              <Button
+                variant="danger"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </div>
+            
+            <div className="delete-section">
+              <h3>Delete Profile</h3>
+              <p>Permanently delete your account and all data</p>
+              <Button
+                variant="danger"
+                onClick={handleDeleteProfile}
+              >
+                Delete Profile
+              </Button>
+            </div>
+          </div>
         </Card>
 
         {/* Password Modal */}
@@ -333,89 +335,41 @@ export default function Profile() {
           </Modal>
         )}
 
-        {/* Notifications Modal */}
-        {activeModal === 'notifications' && (
-          <Modal onClose={() => setActiveModal(null)}>
-            <h2>Notification Settings</h2>
-            <div className="notification-options">
-              <div className="notification-item">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={notificationSettings.periodReminder}
-                    onChange={(e) => setNotificationSettings({
-                      ...notificationSettings,
-                      periodReminder: e.target.checked
-                    })}
-                  />
-                  <span>Period Reminders</span>
-                </label>
-                <p>Get notified when your period is starting soon</p>
-              </div>
-              <div className="notification-item">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={notificationSettings.ovulationReminder}
-                    onChange={(e) => setNotificationSettings({
-                      ...notificationSettings,
-                      ovulationReminder: e.target.checked
-                    })}
-                  />
-                  <span>Ovulation Alerts</span>
-                </label>
-                <p>Get notified when you're in your ovulation window</p>
-              </div>
-              <div className="notification-item">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={notificationSettings.weeklyReport}
-                    onChange={(e) => setNotificationSettings({
-                      ...notificationSettings,
-                      weeklyReport: e.target.checked
-                    })}
-                  />
-                  <span>Weekly Report</span>
-                </label>
-                <p>Receive a weekly summary of your cycle</p>
-              </div>
-              <div className="notification-item">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={notificationSettings.emailNotifications}
-                    onChange={(e) => setNotificationSettings({
-                      ...notificationSettings,
-                      emailNotifications: e.target.checked
-                    })}
-                  />
-                  <span>Email Notifications</span>
-                </label>
-                <p>Receive notifications via email</p>
-              </div>
-            </div>
-            <div className="modal-actions">
-              <Button variant="primary" onClick={handleNotificationSave}>
-                Save Settings
-              </Button>
-              <Button variant="outline" onClick={() => setActiveModal(null)}>
-                Cancel
-              </Button>
-            </div>
-          </Modal>
-        )}
-
         {/* Data Management Modal */}
         {activeModal === 'data' && (
           <Modal onClose={() => setActiveModal(null)}>
             <h2>Data & Privacy</h2>
             <div className="data-options">
               <p>Manage your personal data and privacy preferences</p>
-              <Button variant="outline" className="button-full">
+              <Button 
+                variant="outline" 
+                className="button-full"
+                onClick={() => {
+                  const data = {
+                    userInfo: JSON.parse(localStorage.getItem('userInfo') || '{}'),
+                    periodLogs: JSON.parse(localStorage.getItem('periodLogs') || '[]'),
+                    symptomLogs: JSON.parse(localStorage.getItem('symptomLogs') || '[]'),
+                    moodEntries: JSON.parse(localStorage.getItem('moodEntries') || '[]'),
+                    userNotes: JSON.parse(localStorage.getItem('userNotes') || '[]')
+                  }
+                  const dataStr = JSON.stringify(data, null, 2)
+                  const blob = new Blob([dataStr], { type: 'application/json' })
+                  const url = URL.createObjectURL(blob)
+                  const a = document.createElement('a')
+                  a.href = url
+                  a.download = 'cleo-data.json'
+                  a.click()
+                  URL.revokeObjectURL(url)
+                  alert('Data downloaded successfully!')
+                }}
+              >
                 📥 Download My Data
               </Button>
-              <Button variant="outline" className="button-full">
+              <Button 
+                variant="outline" 
+                className="button-full"
+                onClick={() => alert('Privacy Policy: We collect and store your personal health data locally on your device. We do not share your data with third parties.')}
+              >
                 📋 View Privacy Policy
               </Button>
               <Button 
@@ -444,16 +398,32 @@ export default function Profile() {
           <Modal onClose={() => setActiveModal(null)}>
             <h2>Help & Support</h2>
             <div className="support-options">
-              <Button variant="outline" className="button-full">
+              <Button 
+                variant="outline" 
+                className="button-full"
+                onClick={() => window.open('mailto:support@cleo.app?subject=Support Request', '_blank')}
+              >
                 📧 Email Support
               </Button>
-              <Button variant="outline" className="button-full">
+              <Button 
+                variant="outline" 
+                className="button-full"
+                onClick={() => alert('Live chat is not available right now. Please email us at support@cleo.app')}
+              >
                 💬 Chat with Us
               </Button>
-              <Button variant="outline" className="button-full">
+              <Button 
+                variant="outline" 
+                className="button-full"
+                onClick={() => window.open('https://cleo.app/docs', '_blank')}
+              >
                 📚 Read Documentation
               </Button>
-              <Button variant="outline" className="button-full">
+              <Button 
+                variant="outline" 
+                className="button-full"
+                onClick={() => window.open('https://github.com/hensy19/cleo/issues', '_blank')}
+              >
                 🐛 Report a Bug
               </Button>
             </div>

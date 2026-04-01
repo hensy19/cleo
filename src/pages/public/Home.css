@@ -50,6 +50,10 @@
   flex-wrap: wrap;
 }
 
+.admin-button-container {
+  margin-top: 1rem;
+}
+
 .hero-buttons a {
   text-decoration: none;
 }
